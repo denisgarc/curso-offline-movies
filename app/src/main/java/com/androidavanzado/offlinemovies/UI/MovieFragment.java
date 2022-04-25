@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,8 @@ import android.view.ViewGroup;
 
 import com.androidavanzado.offlinemovies.R;
 import com.androidavanzado.offlinemovies.data.local.entity.MovieEntity;
+import com.androidavanzado.offlinemovies.data.network.Resource;
+import com.androidavanzado.offlinemovies.viewmodel.MovieViewModel;
 
 import java.util.List;
 
@@ -25,10 +29,11 @@ public class MovieFragment extends Fragment {
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
+    private int mColumnCount = 2;
 
     MovieRecyclerViewAdapter movieAdapter;
     List<MovieEntity> movieList;
+    MovieViewModel movieViewModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -54,6 +59,9 @@ public class MovieFragment extends Fragment {
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
+
+        movieViewModel = new ViewModelProvider(getActivity())
+                .get(MovieViewModel.class);
     }
 
     @Override
@@ -73,7 +81,19 @@ public class MovieFragment extends Fragment {
 
             movieAdapter = new MovieRecyclerViewAdapter(getActivity(), movieList);
             recyclerView.setAdapter(movieAdapter);
+
+            loadMovies();
         }
         return view;
+    }
+
+    private void loadMovies() {
+        movieViewModel.getPopularMovies().observe(getActivity(), new Observer<Resource<List<MovieEntity>>>() {
+            @Override
+            public void onChanged(Resource<List<MovieEntity>> listResource) {
+                movieList = listResource.data;
+                movieAdapter.setData(movieList);
+            }
+        });
     }
 }

@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecyclerViewAdapter.ViewHolder> {
 
-    private final List<MovieEntity> mValues;
+    private List<MovieEntity> mValues;
     private final Context mContext;
 
     public MovieRecyclerViewAdapter(Context ctx, List<MovieEntity> items) {
@@ -40,15 +40,25 @@ public class MovieRecyclerViewAdapter extends RecyclerView.Adapter<MovieRecycler
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        holder.mItem = mValues.get(position);
-        Glide.with(mContext)
-                .load(ApiConstants.IMAGE_API_PREFIX + holder.mItem.getPosterPath())
-                .into(holder.imageViewCover);
+        if(mValues != null) {
+            holder.mItem = mValues.get(position);
+            Glide.with(mContext)
+                    .load(ApiConstants.IMAGE_API_PREFIX + holder.mItem.getPosterPath())
+                    .into(holder.imageViewCover);
+        }
+    }
+
+    public void setData(List<MovieEntity> movies) {
+        mValues = movies;
+        notifyDataSetChanged();
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        if(mValues == null)
+            return 0;
+        else
+            return mValues.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

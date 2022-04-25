@@ -88,12 +88,9 @@ public class MovieFragment extends Fragment {
     }
 
     private void loadMovies() {
-        movieViewModel.getPopularMovies().observe(getActivity(), new Observer<Resource<List<MovieEntity>>>() {
-            @Override
-            public void onChanged(Resource<List<MovieEntity>> listResource) {
-                movieList = listResource.data;
-                movieAdapter.setData(movieList);
-            }
+        movieViewModel.getPopularMovies().observe(getActivity(), listResource -> {
+            movieList = listResource.data;
+            movieAdapter.setData(movieList);
         });
     }
 }

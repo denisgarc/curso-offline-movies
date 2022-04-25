@@ -1,11 +1,19 @@
 
-package com.androidavanzado.offlinemovies;
+package com.androidavanzado.offlinemovies.data.local;
+
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName="movies")
 public class MovieEntity {
 
+    @PrimaryKey
+    @SerializedName("id")
+    @Expose
+    private Integer id;
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
@@ -18,9 +26,6 @@ public class MovieEntity {
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
-    @SerializedName("id")
-    @Expose
-    private Integer id;
     @SerializedName("original_title")
     @Expose
     private String originalTitle;

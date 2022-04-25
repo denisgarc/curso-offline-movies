@@ -1,6 +1,6 @@
 package com.androidavanzado.offlinemovies.data.remote.model;
 
-import com.androidavanzado.offlinemovies.data.local.MovieEntity;
+import com.androidavanzado.offlinemovies.data.local.entity.MovieEntity;
 
 import java.util.List;
 

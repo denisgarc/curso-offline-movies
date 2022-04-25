@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.androidavanzado.offlinemovies.R;
-import com.androidavanzado.offlinemovies.data.local.MovieEntity;
+import com.androidavanzado.offlinemovies.data.local.entity.MovieEntity;
 import com.androidavanzado.offlinemovies.data.remote.ApiConstants;
 import com.bumptech.glide.Glide;
 
